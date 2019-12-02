@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Example MarkerManager</title>
+      
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&language=en"></script>
+
+<!-- MarkerManager to handle many markers -->
+<!-- <script type="text/javascript" src="https://gmaps-utility-library.googlecode.com/svn/trunk/markermanager/release/src/markermanager.js"></script> -->
+<!-- <script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn/tags/markermanager/1.0/src/markermanager.js"></script> -->
+<!-- <script type="text/javascript" src="https://google-maps-utility-library-v3.googlecode.com/svn/trunk/markermanager/src/markermanager.js"></script> -->
+<script type="text/javascript" src="http://gmaps-utility-library-dev.googlecode.com/svn/tags/markermanager/1.1/src/markermanager.js"></script>
+      
+<script type="text/javascript">
+   // Creating a map
+   var options = {
+     zoom: 5,
+     center: new google.maps.LatLng(37.99, -93.77),
+     mapTypeId: google.maps.MapTypeId.ROADMAP
+   };
+   var map = new google.maps.Map(document.getElementById('mapCanvas'), options);
+   
+   // Creating a new MarkerManager object
+   var mgr = new MarkerManager(map);
+   
+   // Creating an array that will contain all of the markers
+   var markers = [];
+
+  // Setting the boundaries within where the markers will be created
+  var southWest = new google.maps.LatLng(24, -126);
+  var northEast = new google.maps.LatLng(50, -60);
+  var lngSpan = northEast.lng() - southWest.lng();
+  var latSpan = northEast.lat() - southWest.lat();
+   
+   // Creating markers at random locations
+   for (var i = 0; i < 100; i++) {
+     
+     // Calculating a random location
+     var lat = southWest.lat() + latSpan * Math.random();
+     var lng = southWest.lng() + lngSpan * Math.random();
+     var latlng = new google.maps.LatLng(lat, lng);
+     
+     // Creating a marker
+     var marker = new google.maps.Marker({
+       position: latlng
+     });
+     
+     // Adding the marker to the array
+     markers.push(marker);
+   }
+   
+   // Making sure the MarkerManager is properly loaded before we use it
+   google.maps.event.addListener(mgr, 'loaded', function() {
+     
+     // Adding the markers to the MarkerManager
+     mgr.addMarkers(markers, 1);
+     
+     // Adding the markers to the map
+     mgr.refresh();
+   });
+   
+</script>
+   </head>
+   
+   <body>
+      <div id="mapCanvas"></div>
+   </body>
+</html>
