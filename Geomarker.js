@@ -1,12 +1,9 @@
-var UIOWA_Geomarker = {};
-
 $(document).ready(function () {
     UIOWA_Geomarker.setupMap("mapCanvas", UIOWA_Geomarker.mapType, UIOWA_Geomarker.data);
 });
 
-UIOWA_Geomarker = {
+var UIOWA_Geomarker = {
     setupMap: function (mapId, mapType, data) {
-        var self = this;
 
         // initialize map
         this.map = new google.maps.Map(document.getElementById(mapId), {
@@ -22,8 +19,8 @@ UIOWA_Geomarker = {
 
         // initialize markers (if records exist)
         if (recordCount > 0) {
-            var boundsListener = google.maps.event.addListener(self.map, 'bounds_changed', function(){
-                self.setupDataMarkers(data, function(markerCount) {
+            var boundsListener = google.maps.event.addListener(UIOWA_Geomarker.map, 'bounds_changed', function(){
+                UIOWA_Geomarker.setupDataMarkers(data, function(markerCount) {
                     if (markerCount !== recordCount) {
                         displayedCount = markerCount + ' of ' + recordCount;
                     }
@@ -45,12 +42,10 @@ UIOWA_Geomarker = {
 
     },
     setupDataMarkers: function (data, callback) {
-        var self = this;
-
         // initialize marker manager
         this.mgr = new MarkerManager(this.map);
 
-        google.maps.event.addListener(self.mgr, 'loaded', function(){
+        google.maps.event.addListener(UIOWA_Geomarker.mgr, 'loaded', function(){
             var markers = [];
             var latLngBounds = new google.maps.LatLngBounds();
 
@@ -72,9 +67,9 @@ UIOWA_Geomarker = {
                 }
             });
 
-            self.mgr.addMarkers(markers, 1);
-            self.map.fitBounds(latLngBounds);
-            self.mgr.refresh();
+            UIOWA_Geomarker.mgr.addMarkers(markers, 1);
+            UIOWA_Geomarker.map.fitBounds(latLngBounds);
+            UIOWA_Geomarker.mgr.refresh();
 
             callback(markers.length);
         });
