@@ -67,7 +67,7 @@ class Geomarker extends \ExternalModules\AbstractExternalModule
 
             // build the URL to the record
             $url = sprintf( "%sDataEntry/index.php?pid=%d&page=%s&id=%s",
-                APP_PATH_WEBROOT, $_REQUEST['pid'], $pageName, $fieldData[$recordIdField] );
+                APP_PATH_WEBROOT, htmlentities($_REQUEST['pid'], ENT_QUOTES), $pageName, $fieldData[$recordIdField] );
 
             $newHash['url'] = $url;
 
