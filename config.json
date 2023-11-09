@@ -1,13 +1,21 @@
 {
-	"name": "Geomarker",
+  "name": "Geomarker",
 
-	"namespace": "UIOWA\\Geomarker",
+  "namespace": "UIOWA\\Geomarker",
 
-	"description": "Generates a Google map with marker and info window using geolocation data from specified fields in a REDCap project",
+  "description": "Generates a Google map with marker and info window using geolocation data from specified fields in a REDCap project",
 
-	"documentation": "README.md",
+  "framework-version": 10,
+  "compatibility": {
+    "php-version-min": "",
+    "php-version-max": "",
+    "redcap-version-min": "12.4.6",
+    "redcap-version-max": ""
+  },
 
-	  "authors": [
+  "documentation": "README.md",
+
+  "authors": [
     {
       "name": "Joe Spring",
       "email": "redcap@icts.uiowa.edu",
@@ -22,73 +30,68 @@
       "name": "Chris Ortman",
       "email": "redcap@icts.uiowa.edu",
       "institution": "University of Iowa Institute for Clinical and Translational Science"
-    },
-	{
-		"name": "Fred McClurg",
-		"email": "",
-		"institution": "University of Iowa Institute for Clinical and Translational Science"
-	}
+    }
   ],
 
-	"links": {
-		"project": [
-			{
-				"name": "Geomarker Map",
-				"icon": "pin",
-				"url": "index.php"
-			}
-		]
-	},
+  "links": {
+    "project": [
+      {
+        "name": "Geomarker Map",
+        "icon": "pin",
+        "url": "index.php"
+      }
+    ]
+  },
 
-	"project-settings": [
-		{
-			"key": "google-maps-api-key",
-			"name": "Google Maps v3 API Key",
-			"type": "text",
-			"required": true
-		},
-		{
-			"key": "lat-field",
-			"name": "Latitude Field",
-			"type": "field-list",
-			"required": true
-		},
-		{
-			"key": "lng-field",
-			"name": "Longitude Field",
-			"type": "field-list",
-			"required": true
-		},
-		{
-			"key": "map-type",
-			"name": "Type of Map",
-			"type": "radio",
-			"choices": [
-				{
-					"name": "Roadmap",
-					"value": "roadmap"
-				},
-				{
-					"name": "Satellite",
-					"value": "satellite"
-				},
-				{
-					"name": "Hybrid (Satellite + Roads)",
-					"value": "hybrid"
-				},
-				{
-					"name": "Terrain",
-					"value": "terrain"
-				}
-			],
-			"required": true,
-			"default": "roadmap"
-		},
-		{
-			"key": "hover-field",
-			"name": "Hover Text Field",
-			"type": "field-list",
-			"required": false
-		}
-	]
+  "project-settings": [
+    {
+      "key": "google-maps-api-key",
+      "name": "Google Maps v3 API Key",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "lat-field",
+      "name": "Latitude Field",
+      "type": "field-list",
+      "required": true
+    },
+    {
+      "key": "lng-field",
+      "name": "Longitude Field",
+      "type": "field-list",
+      "required": true
+    },
+    {
+      "key": "map-type",
+      "name": "Type of Map",
+      "type": "radio",
+      "choices": [
+        {
+          "name": "Roadmap",
+          "value": "roadmap"
+        },
+        {
+          "name": "Satellite",
+          "value": "satellite"
+        },
+        {
+          "name": "Hybrid (Satellite + Roads)",
+          "value": "hybrid"
+        },
+        {
+          "name": "Terrain",
+          "value": "terrain"
+        }
+      ],
+      "required": true,
+      "default": "roadmap"
+    },
+    {
+      "key": "hover-field",
+      "name": "Hover Text Field",
+      "type": "field-list",
+      "required": false
+    }
+  ]
 }

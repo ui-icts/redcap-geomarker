@@ -27,7 +27,7 @@ class Geomarker extends \ExternalModules\AbstractExternalModule
         <script>
             Object.assign(UIOWA_Geomarker, {
                 mapType: '<?= $this->getProjectSetting('map-type') ?>',
-                data: JSON.parse('<?= $json ?>')
+                data: '<?= htmlspecialchars($json, ENT_QUOTES) ?>'
             })
         </script>
 
@@ -39,39 +39,73 @@ class Geomarker extends \ExternalModules\AbstractExternalModule
 
     public function getRedcapMarkerData($hoverField, $latField, $lngField) {
         $recordIdField = \REDCap::getRecordIdField();
-        $redcapData = json_decode(\REDCap::getData('json', null, [$recordIdField, $hoverField, $latField, $lngField]), true);
+        $userRights = \REDCap::getUserRights()[USERID];
+        $dagId = $userRights['group_id'];
+        $allGroups = \REDCap::getGroupNames();
+        $userDagName = $allGroups[$dagId];
+        $fields = [$recordIdField, $hoverField, $latField, $lngField];
+        $group = SUPER_USER == "1" ? NULL : $dagId;
+
+        $getDataParams = [
+            'return_format' => 'json',
+            'fields' => $fields,
+            'exportDataAccessGroups' => true,
+            'groups' => $group
+            
+        ];
+
+        $redcapData = json_decode(\REDCap::getData($getDataParams),true);
         $markerData = array();
 
         // obtain the name of the data collection instrument form
+        $locationInstruments = json_decode(\REDCap::getDataDictionary('json', false, $fields), true);
         $pageName = json_decode(\REDCap::getDataDictionary('json', false, $hoverField), true)[0]['form_name'];
 
-        foreach ( $redcapData as $fieldData ) {
-            $newHash = array();
-
-            foreach ( $fieldData as $key => $value ) {
-                if ( $key == $hoverField ) {
-                    $newKey = "title";
-                }
-                elseif ( $key == $latField ) {
-                    $newKey = "lat";
-                }
-                elseif ( $key == $lngField ) {
-                    $newKey = "lng";
-                }
-                else {
-                    $newKey = $key;
-                }
-
-                $newHash[$newKey] = $value;
+        $hasInstrumentAccess = false;
+        foreach($locationInstruments AS $pages) {
+            
+            if(SUPER_USER == "1" || $userRights['forms'][$pages['form_name']] == "1" || $userRights['forms'][$pages['form_name']] == "2" ) {
+                $hasInstrumentAccess = true;
+                
+            } else {
+                $hasInstrumentAccess = false;
+                break;
             }
 
-            // build the URL to the record
-            $url = sprintf( "%sDataEntry/index.php?pid=%d&page=%s&id=%s",
-                APP_PATH_WEBROOT, htmlentities($_REQUEST['pid'], ENT_QUOTES), $pageName, $fieldData[$recordIdField] );
+        }
 
-            $newHash['url'] = $url;
+        if($hasInstrumentAccess) {
+            foreach ( $redcapData as $fieldData ) {
+                $newHash = array();
+    
+                foreach ( $fieldData as $key => $value ) {
+    
+                    if ( $key == $hoverField ) {
+                        $newKey = "title";
+                    }
+                    elseif ( $key == $latField ) {
+                        $newKey = "lat";
+                    }
+                    elseif ( $key == $lngField ) {
+                        $newKey = "lng";
+                    }
+                    else {
+                        $newKey = $key;
+                    }
 
-            array_push($markerData, $newHash);
+                    $newHash[$newKey] = $value;
+                    
+                }
+    
+                // build the URL to the record
+                $url = sprintf( "%sDataEntry/index.php?pid=%d&page=%s&id=%s",
+                    APP_PATH_WEBROOT, htmlentities($_REQUEST['pid'], ENT_QUOTES), $pageName, $fieldData[$recordIdField] );
+    
+                $newHash['url'] = $url;
+    
+                array_push($markerData, $newHash);
+    
+            }
         }
 
         return json_encode($markerData);
