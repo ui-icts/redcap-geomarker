@@ -39,21 +39,11 @@ class Geomarker extends \ExternalModules\AbstractExternalModule
 
     public function getRedcapMarkerData($hoverField, $latField, $lngField) {
         $recordIdField = \REDCap::getRecordIdField();
-
         $userRights = \REDCap::getUserRights()[USERID];
-        
         $dagId = $userRights['group_id'];
-
         $allGroups = \REDCap::getGroupNames();
-
-        
-
         $userDagName = $allGroups[$dagId];
-
         $fields = [$recordIdField, $hoverField, $latField, $lngField];
-
-        
-
         $group = SUPER_USER == "1" ? NULL : $dagId;
 
         $getDataParams = [
@@ -64,30 +54,21 @@ class Geomarker extends \ExternalModules\AbstractExternalModule
             
         ];
 
-        // $redcapData = json_decode(\REDCap::getData('json', null, [$recordIdField, $hoverField, $latField, $lngField]), true);
         $redcapData = json_decode(\REDCap::getData($getDataParams),true);
         $markerData = array();
-
-        
 
         // obtain the name of the data collection instrument form
         $locationInstruments = json_decode(\REDCap::getDataDictionary('json', false, $fields), true);
         $pageName = json_decode(\REDCap::getDataDictionary('json', false, $hoverField), true)[0]['form_name'];
 
-        
-        
-
         $hasInstrumentAccess = false;
         foreach($locationInstruments AS $pages) {
-            
-            
             
             if(SUPER_USER == "1" || $userRights['forms'][$pages['form_name']] == "1" || $userRights['forms'][$pages['form_name']] == "2" ) {
                 $hasInstrumentAccess = true;
                 
             } else {
                 $hasInstrumentAccess = false;
-                
                 break;
             }
 
@@ -99,25 +80,20 @@ class Geomarker extends \ExternalModules\AbstractExternalModule
     
                 foreach ( $fieldData as $key => $value ) {
     
-    
-                    // if($hasInstrumentAccess) {
-                        if ( $key == $hoverField ) {
-                            $newKey = "title";
-                        }
-                        elseif ( $key == $latField ) {
-                            $newKey = "lat";
-                        }
-                        elseif ( $key == $lngField ) {
-                            $newKey = "lng";
-                        }
-                        else {
-                            $newKey = $key;
-                        }
+                    if ( $key == $hoverField ) {
+                        $newKey = "title";
+                    }
+                    elseif ( $key == $latField ) {
+                        $newKey = "lat";
+                    }
+                    elseif ( $key == $lngField ) {
+                        $newKey = "lng";
+                    }
+                    else {
+                        $newKey = $key;
+                    }
 
-                        $newHash[$newKey] = $value;
-                    // }
-                
-            
+                    $newHash[$newKey] = $value;
                     
                 }
     
@@ -131,11 +107,6 @@ class Geomarker extends \ExternalModules\AbstractExternalModule
     
             }
         }
-                
-  
-
-        
-        
 
         return json_encode($markerData);
     }

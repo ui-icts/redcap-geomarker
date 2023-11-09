@@ -1,17 +1,10 @@
 $(document).ready(function () {
-  console.log("hi1");
   UIOWA_Geomarker.setupMap(
     "mapCanvas",
     UIOWA_Geomarker.mapType,
     UIOWA_Geomarker.data
   );
 });
-
-// UIOWA_Geomarker.data = JSON.parse(
-//   UIOWA_Geomarker.data.replaceAll("&quot;", '"').replaceAll("&amp;", "&")
-// );
-// console.log("hi2");
-// console.log(UIOWA_Geomarker.data);
 
 const UIOWA_Geomarker = {
   setupMap: function (mapId, mapType, data) {
