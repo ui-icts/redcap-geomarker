@@ -3,10 +3,6 @@ namespace UIOWA\Geomarker;
 
 class Geomarker extends \ExternalModules\AbstractExternalModule
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function display() {
         $json = $this->getRedcapMarkerData(
