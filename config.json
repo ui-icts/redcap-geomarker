@@ -5,12 +5,16 @@
 
   "description": "Generates a Google map with marker and info window using geolocation data from specified fields in a REDCap project",
 
-  "framework-version": 10,
+  "framework-version": 14,
   "compatibility": {
     "php-version-min": "",
     "php-version-max": "",
-    "redcap-version-min": "12.4.6",
+    "redcap-version-min": "13.7.3",
     "redcap-version-max": ""
+  },
+
+  "versions": {
+    "1.0.7": "Updated EM framework version to 14 and REDCap minimum version to 13.7.3.  Remove constructor."
   },
 
   "documentation": "README.md",
