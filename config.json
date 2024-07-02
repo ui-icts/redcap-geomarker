@@ -14,7 +14,7 @@
   },
 
   "versions": {
-    "1.0.7": "Updated EM framework version to 14 and REDCap minimum version to 13.7.3"
+    "1.0.7": "Updated EM framework version to 14 and REDCap minimum version to 13.7.3.  Remove constructor."
   },
 
   "documentation": "README.md",
