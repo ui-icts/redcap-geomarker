@@ -5,16 +5,17 @@
 
   "description": "Generates a Google map with marker and info window using geolocation data from specified fields in a REDCap project",
 
-  "framework-version": 14,
+  "framework-version": 15,
   "compatibility": {
     "php-version-min": "",
     "php-version-max": "",
-    "redcap-version-min": "13.7.3",
+    "redcap-version-min": "",
     "redcap-version-max": ""
   },
 
   "versions": {
-    "1.0.7": "Updated EM framework version to 14 and REDCap minimum version to 13.7.3.  Remove constructor."
+    "1.0.7": "Updated EM framework version to 14 and REDCap minimum version to 13.7.3.  Remove constructor.",
+    "1.0.8": "Updated EM framework version to 15.  Removed REDCap minimum version."
   },
 
   "documentation": "README.md",
@@ -22,16 +23,6 @@
   "authors": [
     {
       "name": "Joe Spring",
-      "email": "redcap@icts.uiowa.edu",
-      "institution": "University of Iowa Institute for Clinical and Translational Science"
-    },
-    {
-      "name": "Heath Davis",
-      "email": "redcap@icts.uiowa.edu",
-      "institution": "University of Iowa Institute for Clinical and Translational Science"
-    },
-    {
-      "name": "Chris Ortman",
       "email": "redcap@icts.uiowa.edu",
       "institution": "University of Iowa Institute for Clinical and Translational Science"
     }
